@@ -1,3 +1,11 @@
+#/*Space Invaders 
+ #Naman Verma #5 Period 2
+#Description: This is a recreation of the classic arcade game, Space Invaders. The objective of the game is to shoot the aliens and not let the main ship get shot by the aliens. There is also a movable shield to protect the main ship from the aliens. #
+#*/# 
+
+
+
+#Call libraries for functions called later, and define starting functions to set up the game  
 import pygame
 from pygame import mixer
 from pygame.locals import *
@@ -13,7 +21,7 @@ pygame.init()
 clock = pygame.time.Clock()
 fps = 60
 
-
+#Setting game dimensions 
 screen_width = 600
 screen_height = 800
 
@@ -78,8 +86,18 @@ class Spaceship(pygame.sprite.Sprite):
 		self.health_remaining = health
 		self.last_shot = pygame.time.get_ticks()
 
+      
+#Creating shield class 
+class Shield(pygame.sprite.Sprite):
+  def__init__(self, x, y, is_hit):
+      self.image = pygame.image.load("img/shield.png")
+		  self.rect = self.image.get_rect()
+		  self.rect.center = [x2, y2]
+      self.is_hit_T = is_hit
+      self.is_hit_F = is_hit
 
-	def update(self):
+
+def update(self):
 		#set movement speed
 		speed = 8
 		#set a cooldown variable
@@ -102,6 +120,17 @@ class Spaceship(pygame.sprite.Sprite):
 			bullet = Bullets(self.rect.centerx, self.rect.top)
 			bullet_group.add(bullet)
 			self.last_shot = time_now
+
+    #Move shield, using keys U, J, K, H to move up down left right
+      if key[pygame.U_SPACE]:
+        shield_group = self.rect.top
+      else if key[pygame.J_SPACE]:
+        shield_group = self.rect.bottom
+      else if key[pygame.K_SPACE]:
+        shield_group = self.rect.right
+      else if key[pygame.H_SPACE];
+        shield_group = self.rect.left
+        
 
 
 		#update mask
@@ -229,6 +258,7 @@ bullet_group = pygame.sprite.Group()
 alien_group = pygame.sprite.Group()
 alien_bullet_group = pygame.sprite.Group()
 explosion_group = pygame.sprite.Group()
+shield_group = pygame.sprite.Group()
 
 
 def create_aliens():
@@ -266,6 +296,12 @@ while run:
 			alien_bullet = Alien_Bullets(attacking_alien.rect.centerx, attacking_alien.rect.bottom)
 			alien_bullet_group.add(alien_bullet)
 			last_alien_shot = time_now
+
+    #shield protection 
+     if pygame.sprite.spritecollide(self, shield_group, True, pygame.sprite.collide_mask):
+       alien_bullet_group.rect.bottom
+     
+       
 
 		#check if all the aliens have been killed
 		if len(alien_group) == 0:
